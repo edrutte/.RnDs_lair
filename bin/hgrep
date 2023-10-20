@@ -1,0 +1,2 @@
+#!/bin/bash
+grep -a "$@" "$HOME/.bash_history"

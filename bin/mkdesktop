@@ -1,0 +1,25 @@
+#!/bin/bash
+# Makes a new desktop entry based on name, icon, and binary
+echo "Program Name?"
+read prgName
+if [ -z "$prgName" ]; then
+	exit 1
+fi
+if [ -f "$HOME/Desktop/${prgName}.desktop" ]; then
+	echo "${prgName}.desktop already exists. Overwrite? [N/y]"
+	read overwrite
+	if [ ! "$overwrite" == "y" ]; then
+		exit 1
+	fi
+fi
+echo "Icon?"
+read icon
+echo "Binary?"
+read bin
+pth=`which "$bin"`
+if [ ! $? -eq 0 ]; then
+	echo "$bin not found"
+	exit 1
+fi
+printf "[Desktop Entry]\nEncoding=UTF-8\nType=Application\nName=${prgName}\nComment=${prgName}\nIcon=${icon}\nExec=${pth}\n" > "$HOME/Desktop/${prgName}.desktop"
+
