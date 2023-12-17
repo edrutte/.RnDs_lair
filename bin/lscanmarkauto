@@ -1,0 +1,5 @@
+#!/bin/bash
+# Manual installed but have circular self-dependencies that confuse aptitude
+jk="task-desktop\|gcc-arm-none-eabi"
+# https://unix.stackexchange.com/questions/231865/how-to-find-installed-deb-packages-needlessly-marked-as-manually-installed
+aptitude search -q -F %p '?installed !?automatic (?reverse-depends(?installed .*) | ?reverse-recommends(?installed .*))' | grep -v $jk
